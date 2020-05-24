@@ -1,0 +1,13 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "Homework Node.JS",
+  "main": "index.js",
+  "scripts": {
+    "run": "node index"
+  },
+  "keywords": [],
+  "author": "Bloody Pudding",
+  "license": "ISC",
+  "dependencies": {}
+}
