@@ -9,7 +9,5 @@
   "keywords": [],
   "author": "Bloody Pudding",
   "license": "ISC",
-  "dependencies": {
-    "weather-js": "^2.0.0"
-  }
+  "dependencies": {}
 }
