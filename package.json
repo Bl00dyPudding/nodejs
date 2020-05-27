@@ -9,5 +9,8 @@
   "keywords": [],
   "author": "Bloody Pudding",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "nodemon": "^2.0.4",
+    "request": "^2.88.2"
+  }
 }

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Переводчик</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        *, *::before, *::after {
+            margin:     0;
+            padding:    0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            padding-top: 20px;
+        }
+
+        .nav-wrapper {
+            padding: 0 20px;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper teal lighten-2">
+        <a href="#" class="brand-logo">Переводчик</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="/translate">Переводчик</a></li>
+            <li><a href="/news">Новости</a></li>
+        </ul>
+    </div>
+</nav>
+<section class="container">
+    <div class="row">
+        <div class="input-field col s6">
+            <textarea id="textarea1" class="materialize-textarea"></textarea>
+            <label for="textarea1">ENG</label>
+        </div>
+        <div class="input-field col s6">
+            <textarea id="textarea2" class="materialize-textarea" readonly></textarea>
+            <label for="textarea2">RUS</label>
+        </div>
+    </div>
+    <div class="row">
+        <a class="waves-effect waves-light btn-large col offset-s5 s2" onclick="translateText()">Перевод</a>
+    </div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+
+    const translateText = () => {
+        const text = document.querySelector('#textarea1').value;
+
+        fetch('/api/translate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(text)
+        })
+            .then(res => res.json())
+            .then(data => {
+                document.querySelector('#textarea2').innerText = data.text[0].replace(/"/g,'');
+                document.querySelector('#textarea2').focus()
+            })
+            .catch(err => console.error(err));
+    }
+
+</script>
+</body>
+</html>
