@@ -1,0 +1,15 @@
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo">{{title}}</a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+            <li {{#if isMain}} class="active" {{/if}} ><a href="/">Главная</a></li>
+            <li {{#if isNews}} class="active" {{/if}} ><a href="/news">Новости</a></li>
+        </ul>
+    </div>
+</nav>
+
+<ul class="sidenav" id="mobile-demo">
+    <li><a href="/">Главная</a></li>
+    <li><a href="/news">Новости</a></li>
+</ul>
