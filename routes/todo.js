@@ -46,9 +46,11 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
-
+        const todo = await todoModel.findByPk(+req.params.id)
+        await todo.destroy()
+        res.status(204).json({})
     } catch (e) {
         console.error(e)
         res.status(500).json({

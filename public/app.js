@@ -47,7 +47,6 @@ new Vue({
         },
         completeTodo(id) {
             const idx = this.todos.findIndex(t => t.id === id);
-
             fetch(`/api/todo/${id}`, {
                 method: 'put',
                 headers: {'Content-Type': 'application/json'},
@@ -62,7 +61,14 @@ new Vue({
                 .catch(err => console.error(err))
         },
         removeTodo(id) {
-            this.todos = this.todos.filter(t => t.id !== id)
+            fetch(`/api/todo/${id}`, {
+                method: 'delete',
+                headers: {'Content-Type': 'application/json'}
+            })
+                .then(() => {
+                    this.todos = this.todos.filter(t => t.id !== id)
+                })
+                .catch(err => console.error(err))
         }
     },
     filters: {
