@@ -2,9 +2,10 @@ const {Router} = require('express')
 const todoModel = require('../models/todo')
 const router = Router()
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     try {
-
+        const todos = await todoModel.findAll()
+        res.status(200).json(todos)
     } catch (e) {
         console.error(e)
         res.status(500).json({

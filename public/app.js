@@ -10,6 +10,18 @@ new Vue({
             todos: []
         }
     },
+    created() {
+        fetch('/api/todo', {
+            method: 'get',
+            headers: {'Content-Type': 'application/json'}
+        })
+            .then(res => res.json())
+            .then((todos) => {
+                console.log(todos)
+                this.todos = todos
+            })
+            .catch(err => console.error(err))
+    },
     methods: {
         addTodo() {
             const title = this.todoTitle.trim()
