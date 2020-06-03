@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+
+    <title>Задачи</title>
+
+    <style>
+        .done {
+            text-decoration: line-through;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app" v-cloak>
+    <v-app id="inspire">
+        <v-app-bar app color="blue">
+            <v-toolbar-title>Задачи</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                    <v-btn icon @click="isDark = !isDark" v-on="on">
+                        <v-icon @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+                                v-model="$vuetify.theme.dark">
+                            {{ isDark ? 'check_circle' : 'check_circle_outline' }}
+                        </v-icon>
+                    </v-btn>
+                </template>
+                <span>{{ isDark ? 'Светлая тема' : 'Темная тема' }}</span>
+            </v-tooltip>
+        </v-app-bar>
+        <v-content>
+            <v-container>
+                <v-card>
+                    <v-container>
+                        <v-row>
+                            <v-subheader class="headline">{{new Date() | date}}</v-subheader>
+                            <v-spacer></v-spacer>
+                            <v-subheader>Задач: {{todos.length}}</v-subheader>
+                        </v-row>
+                        <v-text-field
+                                clearable
+                                v-model="todoTitle"
+                                id="newTodo"
+                                name="newTodo"
+                                label="Введите название задачи"
+                                @keyup.enter="addTodo"
+                        >
+                        </v-text-field>
+                    </v-container>
+                    <v-list two-line subheader>
+                        <v-subheader class="subheading" v-if="todos.length === 0">
+                            У вас нет задач, добавьте новую...
+                        </v-subheader>
+                        <v-subheader class="subheading" v-else>
+                            Ваши задачи:
+                        </v-subheader>
+                        <v-list-item v-for="(todo, i)  in todos" :key="i">
+                            <v-list-item-avatar>
+                                <v-btn icon @click="todo.done = !todo.done">
+                                    <v-icon small color="green lighten-2">
+                                        {{ todo.done ? 'check_circle' : 'circle' }}
+                                    </v-icon>
+                                </v-btn>
+                            </v-list-item-avatar>
+                            <v-list-item-content>
+                                <v-list-item-title :class="{done: todo.done}">
+                                    {{todo.title | capitalize}}
+                                </v-list-item-title>
+                                <v-list-item-subtitle>
+                                    Добавлено в: {{todo.date | date}}
+                                </v-list-item-subtitle>
+                            </v-list-item-content>
+                            <v-list-item-action>
+                                <v-btn icon @click="removeTodo(todo.id)">
+                                    <v-icon small color="red lighten-2">close</v-icon>
+                                </v-btn>
+                            </v-list-item-action>
+                        </v-list-item>
+                    </v-list>
+                </v-card>
+            </v-container>
+        </v-content>
+    </v-app>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        vuetify: new Vuetify({
+            theme: {dark: false}
+        }),
+        data() {
+            return {
+                isDark: false,
+                todoTitle: '',
+                todos: []
+            }
+        },
+        methods: {
+            addTodo() {
+                const title = this.todoTitle.trim()
+                if (!title) {return}
+                this.todos.push({
+                    title: title,
+                    id: Math.random(),
+                    done: false,
+                    date: new Date()
+                })
+                this.todoTitle = ''
+            },
+            removeTodo(id) {
+                this.todos = this.todos.filter(t => t.id !== id)
+            }
+        },
+        filters: {
+            capitalize(value) {
+                return value.toString().charAt(0).toUpperCase() + value.slice(1)
+            },
+            date(value) {
+                return new Intl.DateTimeFormat('ru-RU', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: '2-digit'
+                }).format(new Date(value))
+            }
+        }
+    })
+</script>
+</body>
+</html>
