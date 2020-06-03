@@ -6,7 +6,7 @@ const todo = database.define('todo', {
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.INTEGER
     },
     done: {
         type: Sequelize.BOOLEAN,

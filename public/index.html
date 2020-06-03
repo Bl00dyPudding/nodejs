@@ -69,7 +69,8 @@
                         </v-subheader>
                         <v-list-item v-for="(todo, i)  in todos" :key="i">
                             <v-list-item-avatar>
-                                <v-btn icon @click="todo.done = !todo.done">
+<!--                                <v-btn icon @click="todo.done = !todo.done">-->
+                                <v-btn icon @click="completeTodo(todo.id)">
                                     <v-icon small color="green lighten-2">
                                         {{ todo.done ? 'check_circle' : 'circle' }}
                                     </v-icon>
