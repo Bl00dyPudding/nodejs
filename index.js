@@ -7,7 +7,7 @@ const app = express()
 const PORT = process.env.PORT || 80
 
 app.use(express.static(path.resolve(__dirname, 'public')))
-
+app.use(express.json())
 app.use('/api/todo', todoRoutes)
 
 app.use((req, res, next) => {
