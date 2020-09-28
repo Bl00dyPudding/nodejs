@@ -1,23 +1,28 @@
-const Logger = require('./module/logger')
-const logger = new Logger('logs.json')
+const express = require('express')
+const path = require('path')
+const todoRoutes = require('./routes/todo')
+const database = require('./utils/database')
 
-const Game = require('./module/game')
-const game = new Game()
+const app = express()
+const PORT = process.env.PORT || 80
 
-game.on('start', () => {
-    logger.createFile()
+app.use(express.static(path.resolve(__dirname, 'public')))
+app.use(express.json())
+app.use('/api/todo', todoRoutes)
+
+app.use((req, res, next) => {
+    res.sendFile('/index.html')
 })
 
-game.on('round', (log) => {
-    logger.add(log)
-})
-
-game.on('end', () => {
-    logger.read()
-})
-
-if (process.argv[2] === 'logs') {
-    logger.read()
-} else {
-    game.startGame()
+const start = async () => {
+    try {
+        await database.sync()
+        app.listen(PORT, () => {
+            console.log('Батут сработал!')
+        })
+    } catch (e) {
+        console.error(e)
+    }
 }
+
+start()
