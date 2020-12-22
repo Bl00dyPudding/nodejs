@@ -41,7 +41,7 @@
                 <span>{{ isDark ? 'Светлая тема' : 'Темная тема' }}</span>
             </v-tooltip>
         </v-app-bar>
-        <v-content>
+        <v-main>
             <v-container>
                 <v-card>
                     <v-container>
@@ -69,7 +69,6 @@
                         </v-subheader>
                         <v-list-item v-for="(todo, i)  in todos" :key="i">
                             <v-list-item-avatar>
-<!--                                <v-btn icon @click="todo.done = !todo.done">-->
                                 <v-btn icon @click="completeTodo(todo.id)">
                                     <v-icon small color="green lighten-2">
                                         {{ todo.done ? 'check_circle' : 'circle' }}
@@ -94,7 +93,7 @@
                     </v-list>
                 </v-card>
             </v-container>
-        </v-content>
+        </v-main>
     </v-app>
 </div>
 

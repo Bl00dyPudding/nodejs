@@ -26,12 +26,6 @@ new Vue({
         addTodo() {
             const title = this.todoTitle.trim()
             if (!title) return
-            // this.todos.push({
-            //     title: title,
-            //     id: Math.random(),
-            //     done: false,
-            //     date: new Date()
-            // })
             fetch('/api/todo', {
                 method: 'post',
                 headers: {'Content-Type': 'application/json'},
